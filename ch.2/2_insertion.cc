@@ -27,10 +27,14 @@ void sort(int *a, int n){
         cout << "wrong input" << endl;
         return;
     }
+    for(int i = 1; i < n; ++i)
+        for(int j = i; j > 0; --j)
+            if(a[j] > a[j-1])
+                exch(a[j], a[j-1]);
 }
 
 int main(){
-    int n;
+    int *a;
     cin >> n;
     int a[n];
     srand((unsigned)time(NULL));
