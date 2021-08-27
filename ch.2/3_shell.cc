@@ -31,12 +31,12 @@ void sort(int *a, int n){
     while(h < 3/n)
         h = 3*h + 1;
     while(h > 0){
-        
         for(int i = h; i < n; i += h){
             int j;
-            int num = a[j];
-            for(j = i; a[j] > num && j > 0; j -= h)
+            int num = a[i];
+            for(j = i; a[j-h] > num && j-h >= 0; j -= h)
                 a[j] = a[j-h];
+            a[j] = num;
         }
         h /= 3;
     }
