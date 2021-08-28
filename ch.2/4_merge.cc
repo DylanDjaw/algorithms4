@@ -22,15 +22,43 @@ bool isSorted(int *a, int n){
     return 1;            
 }
 
+void merge(int *a, int *aux, int lo, int mid, int hi){
+    for(int i = lo; i <= hi; ++i)
+        aux[i] = a[i];
+    int f1 = lo, f2 = mid + 1;
+    for(int i = lo; i <= hi; ++i){
+        if(f1 > mid){
+            a[i] = aux[f2];
+            ++f2;
+        } else if(f2 > hi){
+            a[i] = aux[f1];
+            ++f1;
+        } else if(aux[f1] > aux[f2]){
+            a[i] = aux[f2];
+            ++f2;
+        } else {
+            a[i] = aux[f1];
+            ++f1;
+        }
+    }
+}
+
+void sort(int *a, int *aux, int lo, int hi){
+    if(lo >= hi)
+        return;
+    int mid = lo + (hi - lo)/2;
+    sort(a, aux, lo, mid);
+    sort(a, aux, mid + 1, hi);
+    merge(a, aux, lo, mid, hi);
+}
+
 void sort(int *a, int n){
     if(nullptr == a || 0 == n){
         cout << "wrong input" << endl;
         return;
     }
-    for(int i = 1; i < n; ++i)
-        for(int j = i; j > 0; --j)
-            if(a[j] < a[j-1])
-                exch(a[j], a[j-1]);
+    int *aux = new int[n];
+    sort(a, aux, 0, n-1);
 }
 
 void test(int *a, int n){
@@ -59,12 +87,13 @@ int main(){
             cout << "array is not sorted" << endl;
     }
     
-    int aa[6][5] = { {0,0,0,0,0},
-                     {5,4,3,2,1},
-                     {1,1,1,1,0},
-                     {-1,1,1,1,0},
-                     {0,1,1,1,1}
-                    };
+    int aa[6][5] = { 
+                        {0,0,0,0,0},
+                        {5,4,3,2,1},
+                        {1,1,1,1,0},
+                        {-1,1,1,1,0},
+                        {0,1,1,1,1}
+                   };
     for(int i = 0; i < 6; ++i)
-        test((int *)(aa + i), 5);
+        test(a + i*5, 5);
 }
