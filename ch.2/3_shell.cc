@@ -27,11 +27,11 @@ void sort(int *a, int n){
         cout << "wrong input" << endl;
         return;
     }
-    int h;
-    while(h < 3/n)
+    int h = 1;
+    while(h < n/3)
         h = 3*h + 1;
     while(h > 0){
-        for(int i = h; i > 0; ++i){
+        for(int i = h; i < n; ++i){
             int num = a[i];
             int j = i;
             for(; j-h >= 0 && a[j-h] > num; j -= h){
@@ -58,7 +58,7 @@ void test(int *a, int n){
 
 int main(){
     int n;
-/*    cin >> n;
+    cin >> n;
     int a[n];
     for(int i = 0; i < 100; ++i){
         srand((unsigned)time(NULL));
@@ -68,7 +68,7 @@ int main(){
         if(!isSorted(a, n))
             cout << "array is not sorted" << endl;
     }
-*/    
+    
     int aa[6][5] = { {0,0,0,0,0},
                      {5,4,3,2,1},
                      {1,1,1,1,0},
