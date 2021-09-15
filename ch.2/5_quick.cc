@@ -5,6 +5,8 @@
 #include <string>
 #include <ctime>
 #include <cstdlib>
+#include <algorithm>
+#include <random>
 
 using namespace std;
 
@@ -22,25 +24,27 @@ bool isSorted(int *a, int n){
     return 1;            
 }
 
+int partition(int *a, int lo, int hi){
+    if(lo <= hi)    
+}
+
+void sort(int *a, int lo, int hi){
+    if(lo < hi){
+        int flag = partition(a, lo, hi);
+        sort(a, lo, flag-1);
+        sort(a, flag+1, hi);
+    }
+}
+
 void sort(int *a, int n){
     if(nullptr == a || 0 == n){
         cout << "wrong input" << endl;
         return;
     }
-    int h = 1;
-    while(h < n/3)
-        h = 3*h + 1;
-    while(h > 0){
-        for(int i = h; i < n; ++i){
-            int num = a[i];
-            int j = i;
-            for(; j-h >= 0 && a[j-h] > num; j -= h){
-                a[j] = a[j-h];
-            }
-            a[j] = num;
-        }
-        h /= 3;
-    }
+    random_device rd;
+    mt19937 g(rd());
+    shuffle(a[0], a[n-1], g);
+    sort(a, 0, n-1);
 }
 
 void test(int *a, int n){
@@ -68,6 +72,7 @@ int main(){
         if(!isSorted(a, n))
             cout << "array is not sorted" << endl;
     }
+    
     int aa[6][5] = { {0,0,0,0,0},
                      {5,4,3,2,1},
                      {1,1,1,1,0},
